@@ -6,8 +6,8 @@ namespace stFinal {
     
 extern "C" {
     typedef void (*PFN_voidfunc)();
-    __declspec(section ".init") extern PFN_voidfunc _ctors[];
-    __declspec(section ".init") extern PFN_voidfunc _dtors[];
+    __attribute__((section (".ctors"))) extern PFN_voidfunc _ctors[];
+    __attribute__((section (".ctors"))) extern PFN_voidfunc _dtors[];
 
     void _prolog();
     void _epilog();

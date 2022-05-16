@@ -25,15 +25,16 @@ INCLUDES	:=	include
 # options for code generation
 #---------------------------------------------------------------------------------
 
-CC 			:= $(TOPDIR)/tools/MWCC4_2/mwcceppc.exe
-CXX 		:= $(TOPDIR)/tools/MWCC4_2/mwcceppc.exe
-LD 			:= $(TOPDIR)/tools/MWCC4_2/mwldeppc.exe
+CC 			:= $(TOPDIR)/tools/clang/bin/clang.exe
+CXX 		:= $(TOPDIR)/tools/clang/bin/clang.exe
+LD 			:= $(TOPDIR)/tools/clang/bin/ld.lld
 ELF2REL		:= $(TOPDIR)/tools/elf2rel.exe
 
 
-CCFLAGS		:= -Cpp_exceptions off -c -proc gekko -nostdinc -O4,p -inline auto -fp hard -u _prolog -u _epilog -u _unresolved -enum int -sdata 0 -sdata2 0 -func_align 4
-CXXFLAGS	:= -lang=c++ $(CCFLAGS)
-LDFLAGS		:= -lcf $(LCF) -r1 -fp hard -m _prolog -g -unused 
+CCFLAGS		:= -target powerpc-gekko-ibm-kuribo-eabi -fdeclspec -fno-addrsig -fuse-ld=lld -nostdlib -nodefaultlibs -fno-exceptions -fno-use-init-array -fno-c++-static-destructors -fno-use-cxa-atexit -r -O4
+#CCFLAGS		:= -Cpp_exceptions off -c -proc gekko -nostdinc -O4,p -inline auto -fp hard -u _prolog -u _epilog -u _unresolved -enum int -sdata 0 -sdata2 0 -func_align 4
+CXXFLAGS	:= $(CCFLAGS)
+LDFLAGS		:= -T $(TOPDIR)/test.ld --unresolved-symbols=ignore-all -e _prolog -r 
 
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional
@@ -79,7 +80,7 @@ export LCF			:= $(TOPDIR)/rel.lcf
 # build a list of include paths
 #---------------------------------------------------------------------------------
 export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
-			-I$(CURDIR)/$(BUILD) -I- \
+			-I$(CURDIR)/$(BUILD) -iquote \
 			-I$(CURDIR)/lib/PowerPC_EABI_Support/Runtime/Inc \
 			-I$(CURDIR)/lib/Brawl/Include \
 			-I$(CURDIR)/lib/nw4r/include \
