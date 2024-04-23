@@ -15,8 +15,8 @@ include $(DEVKITPPC)/wii_rules
 # SOURCES is a list of directories containing source code
 # INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
-TARGET      :=  st_starfox
-RELID       :=  58
+TARGET      :=  sora_adv_menu_sel_char
+RELID       :=  30
 BUILD       :=  build
 SOURCES     :=  source ../lib/PowerPC_EABI_Support/Runtime/Src $(wildcard source/*)
 INCLUDES    :=  include
@@ -54,8 +54,8 @@ export DEPSDIR  := $(CURDIR)/$(BUILD)
 #---------------------------------------------------------------------------------
 # automatically build a list of object files for our project
 #---------------------------------------------------------------------------------
-CFILES      :=  global_destructor_chain.c
-CPPFILES    :=  st_starfox.cpp mo_stage.cpp junk.cpp
+CFILES      :=
+CPPFILES    :=  sora_adv_menu_sel_char.cpp mo_adv_menu.cpp junk.cpp
 #---------------------------------------------------------------------------------
 # use CXX for linking C++ projects, CC for standard C
 #---------------------------------------------------------------------------------
